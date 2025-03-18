@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block mainblock %}
+		<!-- Start Hero Section -->
+			<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Checkout</h1>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- End Hero Section -->
+
+		<div class="untree_co-section">
+		    <div class="container">
+             <form method="POST">
+                {% csrf_token %}
+		      <div class="row mb-5">
+		        <div class="col-md-12">
+		          <div class="border p-4 rounded" role="alert">
+		            Returning customer? <a href="#">Click here</a> to login
+		          </div>
+		        </div>
+		      </div>
+		      <div class="row">
+		        <div class="col-md-6 mb-5 mb-md-0">
+		          <h2 class="h3 mb-3 text-black">Billing Details</h2>
+		          <div class="p-3 p-lg-5 border bg-white">
+
+		            <div class="form-group row">
+		              <div class="col-md-12">
+		                <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
+		                <input type="text" class="form-control" id="c_address"  required name="address" placeholder="Street address">
+		              </div>
+		            </div>
+
+		              <div class="col-md-6">
+		                <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
+		                <input type="text" class="form-control" id="c_phone"  required name="mobile_no" placeholder="Phone Number">
+		              </div>
+		            </div>
+
+		            <div class="form-group">
+		              <label for="c_create_account" class="text-black" data-bs-toggle="collapse" href="#create_an_account" role="button" aria-expanded="false" aria-controls="create_an_account"><input type="checkbox" value="1" id="c_create_account"> Create an account?</label>
+		              <div class="collapse" id="create_an_account">
+		                <div class="py-2 mb-4">
+		                  <p class="mb-3">Create an account by entering the information below. If you are a returning customer please login at the top of the page.</p>
+		                  <div class="form-group">
+		                    <label for="c_account_password" class="text-black">Account Password</label>
+		                    <input type="email" class="form-control" id="c_account_password" name="c_account_password" placeholder="">
+		                  </div>
+		                </div>
+		              </div>
+		            </div>
+
+
+		            
+
+		          <div class="row mb-5">
+		            <div class="col-md-12">
+		              <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+		              <div class="p-3 p-lg-5 border bg-white">
+
+		                <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
+		                <div class="input-group w-75 couponcode-wrap">
+		                  <input type="text" class="form-control me-2" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
+		                  <div class="input-group-append">
+		                    <button class="btn btn-black btn-sm" type="button" id="button-addon2">Apply</button>
+		                  </div>
+		                </div>
+
+		              </div>
+		            </div>
+		          </div>
+
+		          <div class="row mb-5">
+		            <div class="col-md-12">
+		              <h2 class="h3 mb-3 text-black">Your Order</h2>
+		              <div class="p-3 p-lg-5 border bg-white">
+		                <table class="table site-block-order-table mb-5">
+		                  <thead>
+		                    <th>Product</th>
+		                    <th>Total</th>
+		                  </thead>
+		                  <tbody>
+                            {% for item in cart_items.all %}
+		                    <tr>
+		                      <td>{{item.name}}<strong class="mx-2">x</strong></td>
+		                      <td>₹{{item.price}}</td>
+		                    </tr>
+		                    {% endfor %}
+		                    <tr>
+		                      <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
+		                      <td class="text-black font-weight-bold"><strong>₹{{grand_sum}}</strong></td>
+		                    </tr>
+		                  </tbody>
+		                </table>
+
+		                <div class="form-group">
+		                  <button class="btn btn-black btn-lg py-3 btn-block" onclick="window.location='/orders'">Place Order</button>
+		                </div>
+
+		              </div>
+		            </div>
+		          </div>
+
+		        </div>
+		      </div>
+		      </form> 
+		    </div>
+		  </div>
+{% endblock mainblock %}
+
+		
