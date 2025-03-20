@@ -33,3 +33,12 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.product.name} - {self.user.first_name}'
+    
+class contact ( models.Model):
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    email = models.EmailField(max_length=254, blank=False)
+    text = models.TextField()
+
+    def __str__(self):
+        return f'sender name is {self.first_name} {self.last_name}'

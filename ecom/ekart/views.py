@@ -1,7 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
-from .models import products, cart, Order
+from .models import products, cart, Order, contact
 
 
 # Create your views here.
@@ -11,6 +11,27 @@ def home(request):
 
 def auth(request):
     return render(request,'auth.html',{})
+
+def about(request):
+    return render(request,'about us.html',{})
+
+def blog(request):
+    return render(request,'blog.html',{})
+
+def contacts(request):
+    if request.method=='POST':
+        fname = request.POST['first']
+        lname = request.POST['last']
+        email = request.POST['email']
+        text = request.POST['text']
+        user = contact.objects.create( first_name =fname,last_name=lname,email=email,text=text)
+        print(f'{user}_contact add successfully!')
+        return redirect('/')
+    else:
+        return render(request,'contact.html',{})
+
+def service(request):
+    return render(request,'service.html',{})
 
 def signup(request):
     if request.method=='POST':
@@ -119,18 +140,35 @@ def checkout(request):
 
 
 def Orders_p(request):
-    orders = Order.objects.filter(user= request.user).order_by('order_id')
+    orders = Order.objects.filter(user=request.user).order_by('order_id')
 
-    order_list=[]
+    order_list = []
+    temp_order_id = None
+    total_order_price = 0
 
-    temp_order_id = ''
-    total_order_price=0
     for order in orders:
         if temp_order_id != order.order_id:
+            if temp_order_id is not None:
+                # Append previous order data before resetting total_order_price
+                order_list.append({
+                    "order_id": temp_order_id,
+                    "order_price": total_order_price,
+                    "status": order.status
+                })
+            
+            # Reset for new order
             temp_order_id = order.order_id
-            order_list.append({"order_id":order.order_id, 'order_price':total_order_price, 'status':order.status})
+            total_order_price = order.product.price  # Start with current product price
         else:
-            total_order_price+= order.product.price
-            order_list[-1] = {"order_id":order.order_id, 'order_price':total_order_price, 'status':order.status}
+            total_order_price += order.product.price
 
-        return render(request, 'orders.html', {"order_list":order_list, "orders":orders})
+    # Append the last order after the loop
+    if temp_order_id is not None:
+        order_list.append({
+            "order_id": temp_order_id,
+            "order_price": total_order_price,
+            "status": orders.last().status  # Ensure the last status is captured
+        })
+
+    return render(request, 'orders.html', {"order_list": order_list, "orders": orders})
+

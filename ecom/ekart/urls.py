@@ -21,6 +21,10 @@ from . import views
 urlpatterns = [
     path('',views.home,name="home"),
     path('auth', views.auth, name="auth"),
+    path('about', views.about, name="about us"),
+    path('contact', views.contacts, name="contact us"),
+    path('service', views.service, name="service"),
+    path('blog', views.blog, name="blog"),
     path('signup',views.signup,name="signup"),
     path('login',views.signin, name="login"),
     path('add_cart', views.cart_p, name='add_cart'),
