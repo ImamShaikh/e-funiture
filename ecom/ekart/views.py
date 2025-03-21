@@ -112,6 +112,16 @@ def delete_cart_item(request, product_id):
     print("Item deleted from Cart!")
     return redirect('/add_cart')
 
+from django.db.models import Q
+def search_product(request):
+    if request.method =='POST':
+        search_inp = request.POST['search-bar']
+
+        Products = products.objects.filter(Q(name__icontains= search_inp) | Q (desc__icontains = search_inp)| Q (specification__icontains = search_inp))
+        return render(request, 'product.html', {'products': Products})
+    
+    return redirect('/shop')
+
 from uuid import uuid4
 def checkout(request):
     Cart = cart.objects.get(user = request.user)
