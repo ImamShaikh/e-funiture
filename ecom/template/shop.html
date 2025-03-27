@@ -3,23 +3,22 @@
 
 {% block mainblock %}
 		<!-- Start Hero Section -->
-			<div class="hero">
-				<div class="container">
-					<div class="row justify-content-between">
-						<div class="col-lg-5">
-							<div class="intro-excerpt">
-								<h1>Shop</h1>
-							</div>
+		<div class="hero">
+			<div class="container">
+				<div class="row justify-content-between">
+					<div class="col-lg-5">
+						<div class="intro-excerpt">
+							<h1>Shop</h1>
 						</div>
-						<div class="col-lg-7">
-							
-						</div>
+					</div>
+					<div class="col-lg-7">
+
 					</div>
 				</div>
 			</div>
-		<!-- End Hero Section -->
-
-		<!-- Search Bar -->
+		</div>
+	<!-- End Hero Section -->
+    <!-- Search Bar -->
 		<div style="text-align: center; margin: 20px 0;">
 			<form method="POST" action="/search-product" style="display: inline-block; width: 50%;">
 				{% csrf_token%}
@@ -27,34 +26,27 @@
 				<button type="submit" style="padding: 10px 20px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Search</button>
 			</form>
 		</div>
-		<!-- End Search Bar -->
+	<!-- End Search Bar -->
+	
+	<div class="untree_co-section product-section before-footer-section">
+		<div class="container">
+			  <div class="row">
+				{% for item in product %}
+				  <!-- Start Column 1 -->
+				<div class="col-12 col-md-4 col-lg-3 mb-5">
+					<a class="product-item" href="/product/{{item.id}}">
+						<img src="{{item.image.url}}" class="img-fluid product-thumbnail">
+						<h3 class="product-title">{{item.name}}</h3>
+						<strong class="product-price">{{item.price}}</strong>
 
-		<div class="untree_co-section product-section before-footer-section">
-		    <div class="container">
-		      	<div class="row">
-            		<!-- Start Column  -->
-					{% for product in product %}
-					<div class="col-12 col-md-4 col-lg-3 mb-5">
-						<a class="product-item" href="/cart/{{product.id}}">
-							<img src="{{product.image.url}}" class="img-fluid product-thumbnail">
-						<h3 class="product-title">{{product.name}}</h3>
-						<h3 style="text-align: left;">description</h3>
-							<p style="color: #2f2f2f;">
-								{{product.desc}}
-							</p>
-							<h3 style="text-align: left;">specification</h3>
-							<p style="color: #2f2f2f;">
-								{{product.specification}}
-							</p>
-							<strong class="product-price">₹{{product.price}}</strong><br>
-							<input type="submit" class="btn btn-primary" value="add to cart">
-						</a>
-					</div>
-					{% endfor %}
-					<!-- End Column -->
-
-		      	</div>
-		    </div>
+						<span class="icon-cross">
+							<img src="{% static 'images/cross.svg' %}" class="img-fluid">
+						</span>
+					</a>
+				</div> 
+				{% endfor %}
+				<!-- End Column 1 -->
+			  </div>
 		</div>
-
+	</div>
 {% endblock mainblock %}

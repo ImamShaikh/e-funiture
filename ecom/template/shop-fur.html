@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block mainblock %}
+<style>
+	body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+.product-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product-image img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.product-image {
+    flex: 1;
+    padding: 20px;
+}
+
+.product-details {
+    flex: 1;
+    padding: 20px;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: gray;
+    font-size: 14px;
+}
+
+.product-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.product-sku {
+    font-size: 14px;
+    color: gray;
+}
+
+.product-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2f2f2f;
+}
+
+.color-options {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.material-select {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.product-actions {
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.add-to-cart {
+    background: #606c38;
+    color: white;
+}
+
+.enquiry {
+    background: white;
+    border: 1px solid black;
+    color: black;
+}
+
+</style>
+		<!-- Start Hero Section -->
+			<div class="hero">
+				<div class="container">
+					<div class="row justify-content-between">
+						<div class="col-lg-5">
+							<div class="intro-excerpt">
+								<h1>Shop</h1>
+							</div>
+						</div>
+						<div class="col-lg-7">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		<!-- End Hero Section -->
+    <div class="product-container">
+        <div class="product-image">
+            <img src="{{prod.image.url}}" alt="{{prod.name}}">
+        </div>
+        <div class="product-details">
+            <h1 class="product-title">{{prod.name}}</h1>
+            <p class="product-price">₹{{prod.price}}</p>
+            <p class="product-size"><b class="product-price">Specifications:</b> {{prod.specification}}</p>
+			<p class="product-size"><b class="product-price">Description:</b> {{prod.desc}}</p>
+                        
+            <div class="product-actions">
+                <a style="text-decoration: none;" href="/cart/{{prod.id}}"><button class="btn add-to-cart">Add to Cart</button></a>
+                <a style="text-decoration: none;" href="/add_wishlist/{{prod.id}}/"><button class="btn enquiry">Add To Wishlist</button></a>
+            </div>
+        </div>
+    </div>
+{% endblock mainblock %}

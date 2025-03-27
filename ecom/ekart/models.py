@@ -14,6 +14,17 @@ class products(models.Model):
     def _str_ (self):
         return self.name
     
+class Wishlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(products, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.name}"
+    
 class cart(models.Model):
     user = models.ForeignKey(User, related_name='customer', on_delete=models.CASCADE,null=True, blank=True)
     product = models.ManyToManyField(to=products, related_name='cart_products', blank=True)

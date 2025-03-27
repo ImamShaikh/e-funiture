@@ -2,49 +2,119 @@
 {% load static %}
 
 {% block mainblock %}
-		<!-- Start Hero Section -->
-			<div class="hero">
-				<div class="container">
-					<div class="row justify-content-between">
-						<div class="col-lg-5">
-							<div class="intro-excerpt">
-								<h1>Shop</h1>
-							</div>
-						</div>
-						<div class="col-lg-7">
-							
-						</div>
-					</div>
-				</div>
-			</div>
-		<!-- End Hero Section -->
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f8f8f8;
+    }
 
-		<div class="untree_co-section product-section before-footer-section">
-		    <div class="container">
-		      	<div class="row">
-            		<!-- Start Column  -->
-					{% for product in products %}
-					<div class="col-12 col-md-4 col-lg-3 mb-5">
-						<a class="product-item" href="/cart/{{product.id}}">
-							<img src="{{product.image.url}}" class="img-fluid product-thumbnail">
-						<h3 class="product-title">{{product.name}}</h3>
-						<h3 style="text-align: left;">description</h3>
-							<p style="color: #2f2f2f;">
-								{{product.desc}}
-							</p>
-							<h3 style="text-align: left;">specification</h3>
-							<p style="color: #2f2f2f;">
-								{{product.specification}}
-							</p>
-							<strong class="product-price">₹{{product.price}}</strong><br>
-							<input type="submit" class="btn btn-primary" value="add to cart">
-						</a>
-					</div>
-					{% endfor %}
-					<!-- End Column -->
+    .product-container {
+        display: flex;
+        max-width: 1200px;
+        margin: 50px auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
 
-		      	</div>
-		    </div>
-		</div>
+    .product-image img {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    .product-image {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .product-details {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .product-title {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 10px 0;
+    }
+
+    .product-price {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2f2f2f;
+    }
+
+    .product-actions {
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+
+    .add-to-cart {
+        background: #606c38;
+        color: white;
+    }
+
+    .wishlist {
+        background: white;
+        border: 1px solid black;
+        color: black;
+    }
+</style>
+
+<!-- Start Hero Section -->
+<div class="hero">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-lg-5">
+                <div class="intro-excerpt">
+                    <h1>Shop</h1>
+                </div>
+            </div>
+            <div class="col-lg-7"></div>
+        </div>
+    </div>
+</div>
+<!-- End Hero Section -->
+
+{% for product in products %}
+    <div class="product-container">
+        <div class="product-image">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-details">
+            <h1 class="product-title">{{ product.name }}</h1>
+            <p class="product-price">₹{{ product.price }}</p>
+            <p class="product-size"><b class="product-price">Specifications:</b> {{ product.specification }}</p>
+            <p class="product-size"><b class="product-price">Description:</b> {{ product.desc }}</p>
+            
+            <div class="product-actions">
+                <a style="text-decoration: none;" href="/cart/{{ product.id }}/">
+                    <button class="btn add-to-cart">Add to Cart</button>
+                </a>
+                
+                {% if product in wishlist_items %}
+                    <a style="text-decoration: none;" href="/remove_wishlist/{{ product.id }}/">
+                        <button class="btn wishlist">Remove from Wishlist</button>
+                    </a>
+                {% else %}
+                    <a style="text-decoration: none;" href="/add_wishlist/{{ product.id }}/">
+                        <button class="btn wishlist">Add to Wishlist</button>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
 
 {% endblock mainblock %}

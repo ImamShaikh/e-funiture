@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block mainblock %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 0;
+    }
+
+    .wishlist-container {
+        max-width: 800px;
+        margin: 50px auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .wishlist-items {
+        list-style: none;
+        padding: 0;
+    }
+
+    .wishlist-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #f1f1f1;
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 8px;
+        transition: 0.3s ease-in-out;
+    }
+
+    .wishlist-item:hover {
+        background: #e0e0e0;
+    }
+
+    .wishlist-item img {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        margin-right: 15px;
+    }
+
+    .wishlist-item .product-info {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+    }
+
+    .wishlist-item .product-name {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .wishlist-item .product-price {
+        font-size: 14px;
+        color: #777;
+        margin-left: 10px;
+    }
+
+    .remove-btn {
+        background: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .remove-btn:hover {
+        background: #cc0000;
+    }
+
+    .empty-message {
+        text-align: center;
+        color: #777;
+        font-size: 16px;
+        padding: 20px;
+    }
+</style>
+
+<div class="wishlist-container">
+    <h2>💖 Your Wishlist</h2>
+    <ul class="wishlist-items">
+        {% for item in wishlist_items %}
+        <a href="product/{{item.product.id}}" style="text-decoration: none;"><li class="wishlist-item">
+            <div class="product-info">
+                <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+                <span class="product-name">{{ item.product.name }}</span>
+                <span class="product-price">₹{{ item.product.price }}</span>
+            </div>
+            <a href="/remove_wishlist/{{item.product.id}}" class="remove-btn">Remove</a>
+        </li> </a>
+        {% empty %}
+        <p class="empty-message">Your wishlist is empty. 😢</p>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock mainblock %}
+
